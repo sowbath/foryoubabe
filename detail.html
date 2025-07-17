@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>รายละเอียดความทรงจำ</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #121212;
+      color: #e0e0e0;
+      min-height: 100vh;
+      margin: 0;
+      padding: 30px;
+      box-sizing: border-box;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 0 auto;
+      background: #1e1e1e;
+      border-radius: 25px;
+      padding: 30px;
+      box-shadow: 0 20px 40px rgba(255, 105, 180, 0.3);
+    }
+
+    h1 {
+      color: #ff69b4;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    h2 {
+      color: #ff6b6b;
+      margin-bottom: 10px;
+    }
+
+    .date {
+      color: #888;
+      font-style: italic;
+      margin-bottom: 20px;
+    }
+
+    .content {
+      font-size: 1.1rem;
+      line-height: 1.7;
+      margin-bottom: 30px;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+    }
+
+    .gallery img {
+      width: 100%;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 30px;
+      color: #667eea;
+      text-decoration: none;
+      font-weight: bold;
+
+    a.back {
+      display: inline-block;
+      margin-top: 30px;
+      color: #ff69b4;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    
+    a.back:hover {
+      text-decoration: underline;
+    }
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="detail-container">
+    <!-- ข้อมูลจะถูกเพิ่มโดย JavaScript -->
+  </div>
+
+  <script>
+  const data = {
+    festivals: [
+      {
+        title: "วันปีใหม่ 2024 🎊",
+        content: "เข้าปีใหม่ด้วยกัน ดูพลุที่ริวเวอร์ไซด์ ให้คำสัญญาว่าจะรักกันตลอดไป",
+        date: "1 มกราคม 2024",
+        images: ["img/newyear1.jpg", "img/fireworks.jpg"]
+      },
+      {
+        title: "วันวาเลนไทน์ 💝",
+        content: "วันแห่งความรักครั้งแรก ไปดูหนัง ทานอาหาร และดูดาวกัน",
+        date: "14 กุมภาพันธ์ 2024",
+        images: ["img/valentine1.jpg", "img/star-night.jpg"]
+      },
+      {
+        title: "วันสงกรานต์ 🌊",
+        content: "เล่นน้ำกันที่สยามพารากอน สนุกมากจนเสื้อผ้าเปียกหมด",
+        date: "13 เมษายน 2024",
+        images: ["img/songkran1.jpg"]
+      },
+      {
+        title: "วันแม่ 👩‍👧‍👦",
+        content: "ไปเยี่ยมแม่ของเธอพร้อมกัน ได้กินข้าวแกงที่แม่ทำเอง",
+        date: "12 สิงหาคม 2024",
+        images: ["img/mother.jpg"]
+      },
+      {
+        title: "วันพ่อ 👨‍👧‍👦",
+        content: "ไปเที่ยวทะเลกับครอบครัวพ่อฝั่งเรา บรรยากาศดีมาก",
+        date: "5 ธันวาคม 2024",
+        images: ["img/father-beach.jpg"]
+      }
+    ],
+
+    happy: [
+      {
+        title: "เที่ยวสวนสัตว์ด้วยกัน 🐘",
+        content: "วันนั้นอากาศดีมาก เราได้เห็นช้าง ยีราฟ และให้อาหารแพนด้าด้วย",
+        date: "9 มีนาคม 2024",
+        images: ["img/zoo1.jpg", "img/zoo2.jpg"]
+      },
+      {
+        title: "ไปทะเลหัวหิน 🏖",
+        content: "เราเดินริมทะเลตอนพระอาทิตย์ตก เล่นน้ำจนมืดเลย",
+        date: "20 เมษายน 2024",
+        images: ["img/huahin1.jpg"]
+      }
+    ],
+
+    anniversary: [
+      {
+        title: "ครบรอบ 1 ปี 💕",
+        content: "เราฉลองกันด้วยเค้กที่คาเฟ่เล็ก ๆ แล้วดูรูปเก่า ๆ ด้วยกัน",
+        date: "5 พฤษภาคม 2024",
+        images: ["img/anniversary1.jpg"]
+      },
+      {
+        title: "ครบรอบ 500 วัน 🎉",
+        content: "เราไปดูพระอาทิตย์ขึ้นด้วยกันที่ภูเขา มันคือเช้าที่ดีที่สุด",
+        date: "18 มิถุนายน 2024",
+        images: ["img/sunrise.jpg"]
+      }
+    ]
+  };
+
+  const params = new URLSearchParams(window.location.search);
+  const category = params.get('category');
+  const index = parseInt(params.get('index'));
+  const item = data[category]?.[index];
+
+  if (item) {
+    const container = document.getElementById('detail-container');
+    container.innerHTML = `
+      <h1>${item.title}</h1>
+      <div class="date">${item.date}</div>
+      <div class="content">${item.content}</div>
+      ${item.images && item.images.length ? `
+        <div class="gallery">
+          ${item.images.map(src => `<img src="${src}" alt="memory">`).join('')}
+        </div>
+      ` : ''}
+      <a href="index.html" class="back-link">← กลับสู่หน้าแรก</a>
+    `;
+  } else {
+    document.getElementById('detail-container').innerHTML = `<h2>ไม่พบข้อมูล</h2>`;
+  }
+</script>
+
+</body>
+</html>
